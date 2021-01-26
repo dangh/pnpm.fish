@@ -1,12 +1,12 @@
 function pnpm
   ! command type pnpm >/dev/null 2>&1 && begin
     set pnpm_global_dir (npm get global-dir)
-    test -n "$pnpm_global_dir" || begin
+    test -d "$pnpm_global_dir" || begin
       npm set global-dir ~/.local/share/pnpm-global
       set pnpm_global_dir ~/.local/share/pnpm-global
     end
     set pnpm_store_dir (npm get store-dir)
-    test -n "$pnpm_store_dir" || begin
+    test -d "$pnpm_store_dir" || begin
       npm set store-dir ~/.local/share/pnpm-store
     end
     ! contains $pnpm_global_dir/bin $fish_user_paths && set --prepend fish_user_paths $pnpm_global_dir/bin
