@@ -20,6 +20,9 @@ function _pnpm_install --on-event pnpm_install
   # reinstall pnpm with pnpm, at this time it will install to the correct dir
   PATH=$global_dir/bin:$PATH command pnpm install --global pnpm
 
+  # install completions
+  command pnpm install-completion fish
+
   # clean up
   rm -rf $tmpdir
   rm $global_dir/bin/*.cmd
