@@ -11,7 +11,8 @@ function _pnpm_install --on-event pnpm_install
   read --shell --command="$store_dir" --prompt="set_color green; echo -n PNPM store-dir; set_color normal; echo -n ': ';" store_dir && eval "set store_dir (realpath $store_dir)" && command npm set store-dir "$store_dir"
 
   # prepend global-dir to PATH to expose global binaries
-  contains $global_dir/bin $fish_user_paths || set --prepend --universal fish_user_paths $global_dir/bin
+  set --universal pnpm_bin_dir $global_dir/bin
+  fish_add_path $pnpm_bin_dir
 
   # install pnpm to temporary dir, link pnpm/pnpx to global bin dir
   set --local tmpdir (mktemp -d)
@@ -28,6 +29,11 @@ function _pnpm_install --on-event pnpm_install
   rm $global_dir/bin/*.cmd
 end
 
+function _pnpm_update --on-event pnpm_update
+  set --universal pnpm_bin_dir (command npm get global-dir)/bin
+  fish_add_path $pnpm_bin_dir
+end
+
 function _pnpm_uninstall --on-event pnpm_uninstall
   echo (set_color magenta)Uninstalling pnpm(set_color normal)
 
@@ -41,12 +47,14 @@ function _pnpm_uninstall --on-event pnpm_uninstall
   switch $global_dir
   case '' undefined
   case \*
-    set --local i (contains --index $global_dir/bin $fish_user_paths) && set --erase fish_user_paths[$i]
+    set --local i (contains --index $global_dir/bin $fish_user_paths) && set --erase --universal fish_user_paths[$i]
   end
 
   # clean up config
   command npm config delete global-dir
   command npm config delete store-dir
+  
+  set --erase --universal pnpm_bin_dir
 end
 
 function _pnpm_confirm
@@ -60,3 +68,6 @@ function _pnpm_confirm
     end
   end
 end
+
+# ensure pnpm path
+functions --query pnpm && fish_add_path $pnpm_bin_dir
