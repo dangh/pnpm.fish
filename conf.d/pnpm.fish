@@ -7,7 +7,7 @@ function _pnpm_install --on-event pnpm_install
   contains $global_dir '' undefined && set global_dir '~/.local/share/pnpm-global'
   contains $store_dir '' undefined && set store_dir '~/.local/share/pnpm-store'
 
-  read --shell --command="$global_dir" --prompt="set_color green; echo -n PNPM global-dir; set_color normal; echo -n ': ';" global_dir && eval "set global_dir (realpath $global_dir)" && command npm set global-dir "$global_dir"
+  read --shell --command="$global_dir" --prompt="set_color green; echo -n PNPM global-dir; set_color normal; echo -n ': ';" global_dir && eval "set global_dir (realpath $global_dir)" && command npm set global-dir "$global_dir" && command npm set global-bin-dir "$global_dir/bin"
   read --shell --command="$store_dir" --prompt="set_color green; echo -n PNPM store-dir; set_color normal; echo -n ': ';" store_dir && eval "set store_dir (realpath $store_dir)" && command npm set store-dir "$store_dir"
 
   # prepend global-dir to PATH to expose global binaries
@@ -53,6 +53,7 @@ function _pnpm_uninstall --on-event pnpm_uninstall
   # clean up config
   command npm config delete global-dir
   command npm config delete store-dir
+  command npm config delete global-bin-dir
   
   set --erase --universal pnpm_bin_dir
 end
