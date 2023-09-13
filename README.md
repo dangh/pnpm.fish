@@ -14,4 +14,4 @@ This plugin was born to solve 2 issues with pnpm:
   - Set [`global-dir`](https://pnpm.js.org/en/npmrc#global-dir)
   - Put `global-dir/bin` frontmost in the $PATH when installing packages
 
-2. `npx pnpm i -g pnpm` [doesn't work](https://github.com/pnpm/pnpm/issues/2873). This plugin workaround the sell-installer to put pnpm binary to the `global-dir`.
+2. `npx pnpm i -g pnpm` [doesn't work](https://github.com/pnpm/pnpm/issues/2873). This plugin workaround the self-installer to put pnpm binary to the `global-dir`.
