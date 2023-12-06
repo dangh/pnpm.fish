@@ -1,4 +1,7 @@
 function _pnpm_install -e pnpm_install
+  # install dependencies
+  fisher install jorgebucaran/nvm.fish dangh/nvm-which.fish
+
   echo (set_color magenta)Installing pnpm(set_color normal)
 
   set -l global_dir (command npm get global-dir)
@@ -35,6 +38,9 @@ function _pnpm_install -e pnpm_install
 end
 
 function _pnpm_update -e pnpm_update
+  # install dependencies
+  fisher install jorgebucaran/nvm.fish dangh/nvm-which.fish
+
   set -U pnpm_bin_dir (command npm get global-dir)/bin
   fish_add_path $pnpm_bin_dir
 end
