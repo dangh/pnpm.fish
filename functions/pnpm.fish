@@ -25,7 +25,7 @@ function pnpm
     end
   end
 
-  type -qf pnpm || begin
+  test -x $PNPM_HOME/pnpm || begin
     if _pnpm_confirm -y 'pnpm not found. Install now?'
       pnpm i -g pnpm
     else
