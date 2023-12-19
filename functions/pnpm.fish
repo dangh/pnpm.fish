@@ -14,7 +14,7 @@ function pnpm
     case i install
       _pnpm_ensure_deps install
       _pnpm_install_latest
-      fish_add_path $PNPM_HOME
+      set PATH $PNPM_HOME:$PATH
       return
     case up update upgrade
       _pnpm_ensure_deps update
