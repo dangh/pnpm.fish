@@ -39,7 +39,7 @@ function pnpm
 
     if set -q _flag_global
         PATH=(nvm-which 20)/bin:$PATH $PNPM_HOME/pnpm $args
-    else if type -q node && test (node -v >/dev/null | string match -r '\d+') -lt 16
+    else if type -q node && test (node -v | string match -r '\d+') -lt 16
         PATH=(nvm-which 20)/bin:$PATH $PNPM_HOME/pnpm -s dlx pnpm@7 $args
     else
         PATH=(nvm-which 20)/bin:$PATH $PNPM_HOME/pnpm $args
