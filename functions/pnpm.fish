@@ -76,6 +76,7 @@ function _pnpm_install_latest
     end
 
     # prepend global-dir to PATH to expose global binaries
+    mkdir -p $global_dir/bin
     fish_add_path $global_dir/bin
 
     # install pnpm
