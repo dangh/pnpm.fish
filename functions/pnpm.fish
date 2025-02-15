@@ -11,12 +11,10 @@ function pnpm
     if test "$non_opts[2]" = pnpm
         switch "$non_opts[1]"
             case i install
-                _pnpm_ensure_deps install
                 _pnpm_install_latest
                 set PATH $PNPM_HOME:$PATH # source pnpm after install
                 return
             case up update upgrade
-                _pnpm_ensure_deps update
                 _pnpm_install_latest
                 return
             case rm uninstall un
@@ -34,20 +32,6 @@ function pnpm
     end
 
     $PNPM_HOME/pnpm $argv
-end
-
-function _pnpm_ensure_deps -a action
-    set -l deps jorgebucaran/nvm.fish dangh/nvm-which.fish
-    switch "$action"
-        case install
-            set -l missing_deps
-            for dep in $deps
-                fisher ls | grep -q $dep || set -a missing_deps $dep
-            end
-            test -n "$missing_deps" && fisher install $missing_deps
-        case update
-            fisher update $deps
-    end
 end
 
 function _pnpm_install_latest
